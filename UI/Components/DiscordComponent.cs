@@ -21,21 +21,14 @@ namespace LiveSplit.UI.Components
         private DiscordComponentTimeFormatter TimeFormatter { get; set; }
         private bool Initialized;
 
+        private Int64 DefaultDiscordApplication;
+
         private DiscordSettings Settings { get; set; }
 
         public DiscordComponent(LiveSplitState state)
         {
-            try
-            {
-                discord = new Discord.Discord(763054362107838504, (UInt64)CreateFlags.Default);
-                activityManager = discord.GetActivityManager();
-                Initialized = true;
-            }
-            catch
-            {
-                MessageBox.Show("Something went wrong when initializing Discord. Make sure the client is open!" + Environment.NewLine + "LiveSplit will continue running as normal.");
-                Initialized = false;
-            }
+            DefaultDiscordApplication = 763054362107838504;
+            Initialized = false;
             State = state;
             Settings = new DiscordSettings()
             {
@@ -45,6 +38,65 @@ namespace LiveSplit.UI.Components
             DeltaFormatter = new DiscordComponentDeltaFormatter(Settings.Accuracy, Settings.DropDecimals);
             TimeFormatter = new DiscordComponentTimeFormatter(TimeAccuracy.Seconds);
             state.ComparisonRenamed += state_ComparisonRenamed;
+            InitializeDiscord();
+
+            State.OnStart += State_OnStart;
+            State.OnSplit += State_OnSplit;
+            State.OnSkipSplit += State_OnSkipSplit;
+            State.OnUndoSplit += State_OnUndoSplit;
+            State.OnReset += State_OnReset;
+        }
+
+        private void State_OnStart(object sender, EventArgs e)
+        {
+            if (Initialized)
+                UpdatePresence(State);
+        }
+
+        private void State_OnSplit(object sender, EventArgs e)
+        {
+            if (Initialized)
+                UpdatePresence(State);
+        }
+
+        private void State_OnSkipSplit(object sender, EventArgs e)
+        {
+            if (Initialized)
+                UpdatePresence(State);
+        }
+
+        private void State_OnUndoSplit(object sender, EventArgs e)
+        {
+            if (Initialized)
+                UpdatePresence(State);
+        }
+
+        private void State_OnReset(object sender, TimerPhase value)
+        {
+            if (Initialized)
+                UpdatePresence(State);
+        }
+
+        public void InitializeDiscord()
+        {
+            if (Initialized)
+                discord.Dispose();
+            Int64 utilizedId = DefaultDiscordApplication;
+            if (Settings.DiscordApplicationID.Length > 0)
+                utilizedId = Int64.Parse(Settings.DiscordApplicationID);
+
+            try
+            {
+                discord = new Discord.Discord(utilizedId, (UInt64)CreateFlags.Default);
+                activityManager = discord.GetActivityManager();
+                Initialized = true;
+                UpdatePresence(State);
+            }
+            catch
+            {
+                MessageBox.Show("Failed to initialize Discord Rich Presence");
+                Initialized = false;
+            }
         }
 
         void state_ComparisonRenamed(object sender, EventArgs e)
@@ -198,13 +250,10 @@ namespace LiveSplit.UI.Components
                 {
                     if (item == "Details")
                         return Settings.Details;
-
                     else if (item == "State")
                         return Settings.State;
-
                     else if (item == "largeImage")
                         return Settings.largeImageKey;
-
                     else
                         return Settings.smallImageKey;
                 }
@@ -213,13 +262,10 @@ namespace LiveSplit.UI.Components
                 {
                     if (item == "Details")
                         return Settings.NRDetails;
-
                     else if (item == "State")
                         return Settings.NRState;
-
                     else if (item == "largeImage")
                         return Settings.NRlargeImageKey;
-
                     else
                         return Settings.NRsmallImageKey;
                 }
@@ -228,13 +274,10 @@ namespace LiveSplit.UI.Components
                 {
                     if (item == "Details")
                         return Settings.EDetails;
-
                     else if (item == "State")
                         return Settings.EState;
-
                     else if (item == "largeImage")
                         return Settings.ElargeImageKey;
-
                     else
                         return Settings.EsmallImageKey;
                 }
@@ -243,13 +286,10 @@ namespace LiveSplit.UI.Components
                 {
                     if (item == "Details")
                         return Settings.PDetails;
-
                     else if (item == "State")
                         return Settings.PState;
-
                     else if (item == "largeImage")
                         return Settings.PlargeImageKey;
-
                     else
                         return Settings.PsmallImageKey;
                 }
@@ -294,11 +334,13 @@ namespace LiveSplit.UI.Components
 
         public override void Update(IInvalidator invalidator, LiveSplitState state, float width, float height, LayoutMode mode)
         {
-            if (Initialized)
+            if (Settings.RefreshRequested)
             {
-                discord.RunCallbacks();
-                UpdatePresence(state);
+                Settings.RefreshRequested = false;
+                InitializeDiscord();
             }
+            if (Initialized)
+                discord.RunCallbacks();
         }
 
         public override void SetSettings(XmlNode settings)
@@ -319,6 +361,11 @@ namespace LiveSplit.UI.Components
 
         public override void Dispose()
         {
+            State.OnStart -= State_OnStart;
+            State.OnSplit -= State_OnSplit;
+            State.OnSkipSplit -= State_OnSkipSplit;
+            State.OnUndoSplit -= State_OnUndoSplit;
+            State.OnReset -= State_OnReset;
             if (Initialized)
                 discord.Dispose();
         }

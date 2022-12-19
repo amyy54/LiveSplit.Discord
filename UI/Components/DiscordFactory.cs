@@ -10,7 +10,7 @@ namespace LiveSplit.UI.Components
     {
         public string ComponentName => "Discord Rich Presence";
 
-        public string Description => "Discord Rich Presence Integration. (Made by Minibeast)";
+        public string Description => "Discord Rich Presence Integration. (Made by Mini / Amy)";
 
         public ComponentCategory Category => ComponentCategory.Other;
 

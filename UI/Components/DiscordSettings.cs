@@ -43,14 +43,20 @@ namespace LiveSplit.UI.Components
         public bool DropDecimals { get; set; }
         public bool UseDash { get; set; }
 
+        public string DiscordApplicationID { get; set; }
+        public bool RefreshRequested { get; set; }
+
+
         public DiscordSettings()
         {
             InitializeComponent();
 
-            Details = "%game";
-            State = "%category";
-            largeImageKey = "Attempt %attempts";
-            smallImageKey = "%delta In %split";
+            RefreshRequested = false;
+
+            Details = "%game_short - %category";
+            State = "%delta In %split";
+            largeImageKey = "Version 1.8";
+            smallImageKey = "Attempt %attempts";
             DisplayElapsedTimeType = ElapsedTimeType.DisplayAttemptDuration;
             NRClearActivity = false;
             SubSplitCount = false;
@@ -58,6 +64,8 @@ namespace LiveSplit.UI.Components
             DropDecimals = true;
             UseDash = false;
             Comparison = "Current Comparison";
+
+            DiscordApplicationID = "";
 
             // Garbage
             EDetails = "%inherit";
@@ -102,6 +110,8 @@ namespace LiveSplit.UI.Components
             combBoxElapsed.DataBindings.Add("SelectedItem", this, "DisplayElapsedTimeType", false, DataSourceUpdateMode.OnPropertyChanged);
             chkDropDecimals.DataBindings.Add("Checked", this, "DropDecimals", false, DataSourceUpdateMode.OnPropertyChanged);
             chkUseDash.DataBindings.Add("Checked", this, "UseDash", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            applicationText.DataBindings.Add("Text", this, "DiscordApplicationID");
         }
 
         void DiscordSettings_Load(object sender, EventArgs e)
@@ -197,6 +207,8 @@ namespace LiveSplit.UI.Components
             NRsmallImageKey = SettingsHelper.ParseString(element["NRsmallImageKey"], "%inherit");
 
             NRClearActivity = SettingsHelper.ParseBool(element["NRClearActivity"]);
+
+            DiscordApplicationID = SettingsHelper.ParseString(element["DiscordApplicationID"], "");
         }
 
         public XmlNode GetSettings(XmlDocument document)
@@ -213,7 +225,7 @@ namespace LiveSplit.UI.Components
 
         private int CreateSettingsNode(XmlDocument document, XmlElement parent)
         {
-            return SettingsHelper.CreateSetting(document, parent, "Version", "1.7") ^
+            return SettingsHelper.CreateSetting(document, parent, "Version", "1.8") ^
             SettingsHelper.CreateSetting(document, parent, "Details", Details) ^
             SettingsHelper.CreateSetting(document, parent, "State", State) ^
             SettingsHelper.CreateSetting(document, parent, "largeImageKey", largeImageKey) ^
@@ -239,15 +251,22 @@ namespace LiveSplit.UI.Components
             SettingsHelper.CreateSetting(document, parent, "SubSplitCount", SubSplitCount) ^
 
             SettingsHelper.CreateSetting(document, parent, "Accuracy", Accuracy) ^
-            SettingsHelper.CreateSetting(document, parent, "DropDecimals" , DropDecimals) ^
+            SettingsHelper.CreateSetting(document, parent, "DropDecimals", DropDecimals) ^
             SettingsHelper.CreateSetting(document, parent, "UseDash", UseDash) ^
 
-            SettingsHelper.CreateSetting(document, parent, "Comparison", Comparison);
+            SettingsHelper.CreateSetting(document, parent, "Comparison", Comparison) ^
+
+            SettingsHelper.CreateSetting(document, parent, "DiscordApplicationID", DiscordApplicationID);
         }
 
         private void syntaxLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://github.com/Minibeast/LiveSplit.Discord/blob/master/SYNTAX.md");
+            Process.Start("https://github.com/Minibeast/LiveSplit.Discord/blob/main/Documentation/SYNTAX.md");
+        }
+
+        private void refreshDiscordBtn_Click(object sender, EventArgs e)
+        {
+            RefreshRequested = true;
         }
     }
 }

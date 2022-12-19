@@ -39,10 +39,16 @@
             this.chkDropDecimals = new System.Windows.Forms.CheckBox();
             this.rdoTenths = new System.Windows.Forms.RadioButton();
             this.rdoHundredths = new System.Windows.Forms.RadioButton();
+            this.chkUseDash = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.combComparison = new System.Windows.Forms.ComboBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.label18 = new System.Windows.Forms.Label();
+            this.applicationText = new System.Windows.Forms.TextBox();
+            this.refreshDiscordBtn = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.largeText = new System.Windows.Forms.TextBox();
@@ -84,12 +90,13 @@
             this.NRlargeText = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.NRsmallText = new System.Windows.Forms.TextBox();
-            this.chkUseDash = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -106,32 +113,36 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.chkClear, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.combBoxElapsed, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.combBoxElapsed, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.chkSubSplits, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.groupBox2, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.linkLabel1, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.groupBox2, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.linkLabel1, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.groupBox3, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.refreshDiscordBtn, 0, 9);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 7);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 8;
+            this.tableLayoutPanel1.RowCount = 10;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 56F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 108F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(440, 506);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(440, 615);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // chkClear
             // 
             this.chkClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.chkClear.AutoSize = true;
-            this.chkClear.Location = new System.Drawing.Point(7, 203);
+            this.chkClear.Location = new System.Drawing.Point(7, 204);
             this.chkClear.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
             this.chkClear.Name = "chkClear";
             this.chkClear.Size = new System.Drawing.Size(430, 17);
@@ -147,7 +158,7 @@
             "Do Not Display Elapsed Time",
             "Display Time Elapsed from Attempt Start",
             "Display Time Elapsed from Attempt Start w/ Offset"});
-            this.combBoxElapsed.Location = new System.Drawing.Point(3, 300);
+            this.combBoxElapsed.Location = new System.Drawing.Point(3, 351);
             this.combBoxElapsed.Margin = new System.Windows.Forms.Padding(3, 15, 3, 3);
             this.combBoxElapsed.Name = "combBoxElapsed";
             this.combBoxElapsed.Size = new System.Drawing.Size(431, 21);
@@ -158,7 +169,7 @@
             // 
             this.chkSubSplits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.chkSubSplits.AutoSize = true;
-            this.chkSubSplits.Location = new System.Drawing.Point(7, 168);
+            this.chkSubSplits.Location = new System.Drawing.Point(7, 169);
             this.chkSubSplits.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
             this.chkSubSplits.Name = "chkSubSplits";
             this.chkSubSplits.Size = new System.Drawing.Size(430, 17);
@@ -170,7 +181,7 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 455);
+            this.label5.Location = new System.Drawing.Point(3, 506);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(434, 13);
             this.label5.TabIndex = 10;
@@ -179,7 +190,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.tableLayoutPanel6);
-            this.groupBox1.Location = new System.Drawing.Point(3, 340);
+            this.groupBox1.Location = new System.Drawing.Point(3, 391);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(431, 99);
             this.groupBox1.TabIndex = 16;
@@ -257,10 +268,23 @@
             this.rdoHundredths.UseVisualStyleBackColor = true;
             this.rdoHundredths.CheckedChanged += new System.EventHandler(this.rdoHundredths_CheckedChanged);
             // 
+            // chkUseDash
+            // 
+            this.chkUseDash.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkUseDash.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.chkUseDash, 2);
+            this.chkUseDash.Location = new System.Drawing.Point(7, 59);
+            this.chkUseDash.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            this.chkUseDash.Name = "chkUseDash";
+            this.chkUseDash.Size = new System.Drawing.Size(268, 17);
+            this.chkUseDash.TabIndex = 8;
+            this.chkUseDash.Text = "Use a dash (-) when Delta is blank";
+            this.chkUseDash.UseVisualStyleBackColor = true;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.tableLayoutPanel7);
-            this.groupBox2.Location = new System.Drawing.Point(3, 232);
+            this.groupBox2.Location = new System.Drawing.Point(3, 283);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(431, 50);
             this.groupBox2.TabIndex = 17;
@@ -293,13 +317,68 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(3, 479);
+            this.linkLabel1.Location = new System.Drawing.Point(3, 530);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(355, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(67, 13);
             this.linkLabel1.TabIndex = 18;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "https://github.com/Minibeast/LiveSplit.Discord/blob/master/SYNTAX.md\r\n";
+            this.linkLabel1.Text = "SYNTAX.md\r\n";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.syntaxLinkClicked);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.tableLayoutPanel8);
+            this.groupBox3.Location = new System.Drawing.Point(3, 233);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(434, 44);
+            this.groupBox3.TabIndex = 19;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Application ID";
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.ColumnCount = 2;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.Controls.Add(this.label18, 0, 0);
+            this.tableLayoutPanel8.Controls.Add(this.applicationText, 1, 0);
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(6, 19);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 1;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(419, 24);
+            this.tableLayoutPanel8.TabIndex = 0;
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(3, 5);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(203, 13);
+            this.label18.TabIndex = 9;
+            this.label18.Text = "Requires Reload (leave blank for default)\r\n";
+            // 
+            // applicationText
+            // 
+            this.applicationText.Location = new System.Drawing.Point(212, 3);
+            this.applicationText.Name = "applicationText";
+            this.applicationText.Size = new System.Drawing.Size(204, 20);
+            this.applicationText.TabIndex = 10;
+            // 
+            // refreshDiscordBtn
+            // 
+            this.refreshDiscordBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.refreshDiscordBtn.Location = new System.Drawing.Point(3, 563);
+            this.refreshDiscordBtn.Name = "refreshDiscordBtn";
+            this.refreshDiscordBtn.Size = new System.Drawing.Size(434, 49);
+            this.refreshDiscordBtn.TabIndex = 20;
+            this.refreshDiscordBtn.Text = "Refresh Discord Connection";
+            this.refreshDiscordBtn.UseVisualStyleBackColor = true;
+            this.refreshDiscordBtn.Click += new System.EventHandler(this.refreshDiscordBtn_Click);
             // 
             // label4
             // 
@@ -735,19 +814,6 @@
             this.NRsmallText.Size = new System.Drawing.Size(327, 20);
             this.NRsmallText.TabIndex = 2;
             // 
-            // chkUseDash
-            // 
-            this.chkUseDash.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkUseDash.AutoSize = true;
-            this.tableLayoutPanel6.SetColumnSpan(this.chkUseDash, 2);
-            this.chkUseDash.Location = new System.Drawing.Point(7, 59);
-            this.chkUseDash.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
-            this.chkUseDash.Name = "chkUseDash";
-            this.chkUseDash.Size = new System.Drawing.Size(268, 17);
-            this.chkUseDash.TabIndex = 8;
-            this.chkUseDash.Text = "Use a dash (-) when Delta is blank";
-            this.chkUseDash.UseVisualStyleBackColor = true;
-            // 
             // DiscordSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -756,7 +822,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "DiscordSettings";
             this.Padding = new System.Windows.Forms.Padding(7);
-            this.Size = new System.Drawing.Size(454, 520);
+            this.Size = new System.Drawing.Size(454, 629);
             this.Load += new System.EventHandler(this.DiscordSettings_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -765,6 +831,9 @@
             this.tableLayoutPanel6.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.tableLayoutPanel8.ResumeLayout(false);
+            this.tableLayoutPanel8.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -841,5 +910,10 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.CheckBox chkUseDash;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox applicationText;
+        private System.Windows.Forms.Button refreshDiscordBtn;
     }
 }

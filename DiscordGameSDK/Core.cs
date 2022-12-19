@@ -6,36 +6,50 @@ namespace Discord
 {
     public enum Result
     {
-        Ok,
-        ServiceUnavailable,
-        InvalidVersion,
-        LockFailed,
-        InternalError,
-        InvalidPayload,
-        InvalidCommand,
-        InvalidPermissions,
-        NotFetched,
-        NotFound,
-        Conflict,
-        InvalidSecret,
-        InvalidJoinSecret,
-        NoEligibleActivity,
-        InvalidInvite,
-        NotAuthenticated,
-        InvalidAccessToken,
-        ApplicationMismatch,
-        InvalidDataUrl,
-        InvalidBase64,
-        NotFiltered,
-        LobbyFull,
-        InvalidLobbySecret,
-        InvalidFilename,
-        InvalidFileSize,
-        InvalidEntitlement,
-        NotInstalled,
-        NotRunning,
-        InsufficientBuffer,
-        PurchaseCanceled,
+        Ok = 0,
+        ServiceUnavailable = 1,
+        InvalidVersion = 2,
+        LockFailed = 3,
+        InternalError = 4,
+        InvalidPayload = 5,
+        InvalidCommand = 6,
+        InvalidPermissions = 7,
+        NotFetched = 8,
+        NotFound = 9,
+        Conflict = 10,
+        InvalidSecret = 11,
+        InvalidJoinSecret = 12,
+        NoEligibleActivity = 13,
+        InvalidInvite = 14,
+        NotAuthenticated = 15,
+        InvalidAccessToken = 16,
+        ApplicationMismatch = 17,
+        InvalidDataUrl = 18,
+        InvalidBase64 = 19,
+        NotFiltered = 20,
+        LobbyFull = 21,
+        InvalidLobbySecret = 22,
+        InvalidFilename = 23,
+        InvalidFileSize = 24,
+        InvalidEntitlement = 25,
+        NotInstalled = 26,
+        NotRunning = 27,
+        InsufficientBuffer = 28,
+        PurchaseCanceled = 29,
+        InvalidGuild = 30,
+        InvalidEvent = 31,
+        InvalidChannel = 32,
+        InvalidOrigin = 33,
+        RateLimited = 34,
+        OAuth2Error = 35,
+        SelectChannelTimeout = 36,
+        GetGuildTimeout = 37,
+        SelectVoiceForceRequired = 38,
+        CaptureShortcutAlreadyListening = 39,
+        UnauthorizedForAchievement = 40,
+        InvalidGiftCode = 41,
+        PurchaseError = 42,
+        TransactionAborted = 43,
     }
 
     public enum CreateFlags
@@ -434,17 +448,17 @@ namespace Discord
 
         internal IntPtr MethodsPtr;
 
-        internal Nullable<FFIMethods> MethodsStructure;
+        internal Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -541,17 +555,17 @@ namespace Discord
 
         internal IntPtr MethodsPtr;
 
-        internal Nullable<FFIMethods> MethodsStructure;
+        internal Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -610,17 +624,17 @@ namespace Discord
 
         internal IntPtr MethodsPtr;
 
-        internal Nullable<FFIMethods> MethodsStructure;
+        internal Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -680,20 +694,6 @@ namespace Discord
 
         public ResultException(Result result) : base(result.ToString())
         {
-        }
-    }
-
-    internal partial class Utility
-    {
-        internal static IntPtr Retain<T>(T value)
-        {
-            return GCHandle.ToIntPtr(GCHandle.Alloc(value, GCHandleType.Normal));
-        }
-
-        internal static void Release(IntPtr ptr)
-        {
-            GCHandle handle = GCHandle.FromIntPtr(ptr);
-            handle.Free();
         }
     }
 
@@ -852,6 +852,8 @@ namespace Discord
 
         public delegate void SetLogHookHandler(LogLevel level, string message);
 
+        private GCHandle SelfHandle;
+
         private IntPtr EventsPtr;
 
         private FFIEvents Events;
@@ -860,92 +862,92 @@ namespace Discord
 
         private ApplicationManager.FFIEvents ApplicationEvents;
 
-        private ApplicationManager ApplicationManagerInstance;
+        internal ApplicationManager ApplicationManagerInstance;
 
         private IntPtr UserEventsPtr;
 
         private UserManager.FFIEvents UserEvents;
 
-        private UserManager UserManagerInstance;
+        internal UserManager UserManagerInstance;
 
         private IntPtr ImageEventsPtr;
 
         private ImageManager.FFIEvents ImageEvents;
 
-        private ImageManager ImageManagerInstance;
+        internal ImageManager ImageManagerInstance;
 
         private IntPtr ActivityEventsPtr;
 
         private ActivityManager.FFIEvents ActivityEvents;
 
-        private ActivityManager ActivityManagerInstance;
+        internal ActivityManager ActivityManagerInstance;
 
         private IntPtr RelationshipEventsPtr;
 
         private RelationshipManager.FFIEvents RelationshipEvents;
 
-        private RelationshipManager RelationshipManagerInstance;
+        internal RelationshipManager RelationshipManagerInstance;
 
         private IntPtr LobbyEventsPtr;
 
         private LobbyManager.FFIEvents LobbyEvents;
 
-        private LobbyManager LobbyManagerInstance;
+        internal LobbyManager LobbyManagerInstance;
 
         private IntPtr NetworkEventsPtr;
 
         private NetworkManager.FFIEvents NetworkEvents;
 
-        private NetworkManager NetworkManagerInstance;
+        internal NetworkManager NetworkManagerInstance;
 
         private IntPtr OverlayEventsPtr;
 
         private OverlayManager.FFIEvents OverlayEvents;
 
-        private OverlayManager OverlayManagerInstance;
+        internal OverlayManager OverlayManagerInstance;
 
         private IntPtr StorageEventsPtr;
 
         private StorageManager.FFIEvents StorageEvents;
 
-        private StorageManager StorageManagerInstance;
+        internal StorageManager StorageManagerInstance;
 
         private IntPtr StoreEventsPtr;
 
         private StoreManager.FFIEvents StoreEvents;
 
-        private StoreManager StoreManagerInstance;
+        internal StoreManager StoreManagerInstance;
 
         private IntPtr VoiceEventsPtr;
 
         private VoiceManager.FFIEvents VoiceEvents;
 
-        private VoiceManager VoiceManagerInstance;
+        internal VoiceManager VoiceManagerInstance;
 
         private IntPtr AchievementEventsPtr;
 
         private AchievementManager.FFIEvents AchievementEvents;
 
-        private AchievementManager AchievementManagerInstance;
+        internal AchievementManager AchievementManagerInstance;
 
         private IntPtr MethodsPtr;
 
-        private Nullable<FFIMethods> MethodsStructure;
+        private Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
 
-        private FFIMethods.SetLogHookCallback setLogHook;
+        private GCHandle? setLogHook;
 
         public Discord(Int64 clientId, UInt64 flags)
         {
@@ -955,7 +957,8 @@ namespace Discord
             Events = new FFIEvents();
             EventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(Events));
             createParams.Events = EventsPtr;
-            createParams.EventData = (IntPtr)(0);
+            SelfHandle = GCHandle.Alloc(this);
+            createParams.EventData = GCHandle.ToIntPtr(SelfHandle);
             ApplicationEvents = new ApplicationManager.FFIEvents();
             ApplicationEventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(ApplicationEvents));
             createParams.ApplicationEvents = ApplicationEventsPtr;
@@ -1024,6 +1027,7 @@ namespace Discord
             {
                 Methods.Destroy(MethodsPtr);
             }
+            SelfHandle.Free();
             Marshal.FreeHGlobal(EventsPtr);
             Marshal.FreeHGlobal(ApplicationEventsPtr);
             Marshal.FreeHGlobal(UserEventsPtr);
@@ -1037,6 +1041,9 @@ namespace Discord
             Marshal.FreeHGlobal(StoreEventsPtr);
             Marshal.FreeHGlobal(VoiceEventsPtr);
             Marshal.FreeHGlobal(AchievementEventsPtr);
+            if (setLogHook.HasValue) {
+               setLogHook.Value.Free();
+            }
         }
 
         public void RunCallbacks()
@@ -1048,13 +1055,21 @@ namespace Discord
             }
         }
 
+        [MonoPInvokeCallback]
+        private static void SetLogHookCallbackImpl(IntPtr ptr, LogLevel level, string message)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            SetLogHookHandler callback = (SetLogHookHandler)h.Target;
+            callback(level, message);
+        }
+
         public void SetLogHook(LogLevel minLevel, SetLogHookHandler callback)
         {
-             setLogHook = (IntPtr ptr, LogLevel level, string message) =>
-            {
-                callback(level, message);
-            };
-            Methods.SetLogHook(MethodsPtr, minLevel, IntPtr.Zero, setLogHook);
+            if (setLogHook.HasValue) {
+               setLogHook.Value.Free();
+            }
+             setLogHook = GCHandle.Alloc(callback);
+            Methods.SetLogHook(MethodsPtr, minLevel, GCHandle.ToIntPtr(setLogHook.Value), SetLogHookCallbackImpl);
         }
 
         public ApplicationManager GetApplicationManager()
@@ -1202,6 +1217,11 @@ namespace Discord
         }
     }
 
+    internal partial class MonoPInvokeCallbackAttribute : Attribute
+    {
+
+    }
+
     public partial class ApplicationManager
     {
         [StructLayout(LayoutKind.Sequential)]
@@ -1256,17 +1276,17 @@ namespace Discord
 
         private IntPtr MethodsPtr;
 
-        private Nullable<FFIMethods> MethodsStructure;
+        private Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -1288,14 +1308,19 @@ namespace Discord
             Marshal.StructureToPtr(events, eventsPtr, false);
         }
 
+        [MonoPInvokeCallback]
+        private static void ValidateOrExitCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            ValidateOrExitHandler callback = (ValidateOrExitHandler)h.Target;
+            h.Free();
+            callback(result);
+        }
+
         public void ValidateOrExit(ValidateOrExitHandler callback)
         {
-            FFIMethods.ValidateOrExitCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.ValidateOrExit(MethodsPtr, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.ValidateOrExit(MethodsPtr, GCHandle.ToIntPtr(wrapped), ValidateOrExitCallbackImpl);
         }
 
         public string GetCurrentLocale()
@@ -1312,24 +1337,34 @@ namespace Discord
             return ret.ToString();
         }
 
+        [MonoPInvokeCallback]
+        private static void GetOAuth2TokenCallbackImpl(IntPtr ptr, Result result, ref OAuth2Token oauth2Token)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            GetOAuth2TokenHandler callback = (GetOAuth2TokenHandler)h.Target;
+            h.Free();
+            callback(result, ref oauth2Token);
+        }
+
         public void GetOAuth2Token(GetOAuth2TokenHandler callback)
         {
-            FFIMethods.GetOAuth2TokenCallback wrapped = (IntPtr ptr, Result result, ref OAuth2Token oauth2Token) =>
-            {
-                Utility.Release(ptr);
-                callback(result, ref oauth2Token);
-            };
-            Methods.GetOAuth2Token(MethodsPtr, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.GetOAuth2Token(MethodsPtr, GCHandle.ToIntPtr(wrapped), GetOAuth2TokenCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void GetTicketCallbackImpl(IntPtr ptr, Result result, ref string data)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            GetTicketHandler callback = (GetTicketHandler)h.Target;
+            h.Free();
+            callback(result, ref data);
         }
 
         public void GetTicket(GetTicketHandler callback)
         {
-            FFIMethods.GetTicketCallback wrapped = (IntPtr ptr, Result result, ref string data) =>
-            {
-                Utility.Release(ptr);
-                callback(result, ref data);
-            };
-            Methods.GetTicket(MethodsPtr, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.GetTicket(MethodsPtr, GCHandle.ToIntPtr(wrapped), GetTicketCallbackImpl);
         }
     }
 
@@ -1377,17 +1412,17 @@ namespace Discord
 
         private IntPtr MethodsPtr;
 
-        private Nullable<FFIMethods> MethodsStructure;
+        private Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -1408,13 +1443,7 @@ namespace Discord
 
         private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
         {
-            events.OnCurrentUserUpdate = (IntPtr ptr) =>
-            {
-                if (OnCurrentUserUpdate != null)
-                {
-                    OnCurrentUserUpdate.Invoke();
-                }
-            };
+            events.OnCurrentUserUpdate = OnCurrentUserUpdateImpl;
             Marshal.StructureToPtr(events, eventsPtr, false);
         }
 
@@ -1429,14 +1458,19 @@ namespace Discord
             return ret;
         }
 
+        [MonoPInvokeCallback]
+        private static void GetUserCallbackImpl(IntPtr ptr, Result result, ref User user)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            GetUserHandler callback = (GetUserHandler)h.Target;
+            h.Free();
+            callback(result, ref user);
+        }
+
         public void GetUser(Int64 userId, GetUserHandler callback)
         {
-            FFIMethods.GetUserCallback wrapped = (IntPtr ptr, Result result, ref User user) =>
-            {
-                Utility.Release(ptr);
-                callback(result, ref user);
-            };
-            Methods.GetUser(MethodsPtr, userId, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.GetUser(MethodsPtr, userId, GCHandle.ToIntPtr(wrapped), GetUserCallbackImpl);
         }
 
         public PremiumType GetCurrentUserPremiumType()
@@ -1459,6 +1493,17 @@ namespace Discord
                 throw new ResultException(res);
             }
             return ret;
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnCurrentUserUpdateImpl(IntPtr ptr)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.UserManagerInstance.OnCurrentUserUpdate != null)
+            {
+                d.UserManagerInstance.OnCurrentUserUpdate.Invoke();
+            }
         }
     }
 
@@ -1496,17 +1541,17 @@ namespace Discord
 
         private IntPtr MethodsPtr;
 
-        private Nullable<FFIMethods> MethodsStructure;
+        private Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -1528,14 +1573,19 @@ namespace Discord
             Marshal.StructureToPtr(events, eventsPtr, false);
         }
 
+        [MonoPInvokeCallback]
+        private static void FetchCallbackImpl(IntPtr ptr, Result result, ImageHandle handleResult)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            FetchHandler callback = (FetchHandler)h.Target;
+            h.Free();
+            callback(result, handleResult);
+        }
+
         public void Fetch(ImageHandle handle, bool refresh, FetchHandler callback)
         {
-            FFIMethods.FetchCallback wrapped = (IntPtr ptr, Result result, ImageHandle handleResult) =>
-            {
-                Utility.Release(ptr);
-                callback(result, handleResult);
-            };
-            Methods.Fetch(MethodsPtr, handle, refresh, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.Fetch(MethodsPtr, handle, refresh, GCHandle.ToIntPtr(wrapped), FetchCallbackImpl);
         }
 
         public ImageDimensions GetDimensions(ImageHandle handle)
@@ -1659,17 +1709,17 @@ namespace Discord
 
         private IntPtr MethodsPtr;
 
-        private Nullable<FFIMethods> MethodsStructure;
+        private Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -1696,34 +1746,10 @@ namespace Discord
 
         private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
         {
-            events.OnActivityJoin = (IntPtr ptr, string secret) =>
-            {
-                if (OnActivityJoin != null)
-                {
-                    OnActivityJoin.Invoke(secret);
-                }
-            };
-            events.OnActivitySpectate = (IntPtr ptr, string secret) =>
-            {
-                if (OnActivitySpectate != null)
-                {
-                    OnActivitySpectate.Invoke(secret);
-                }
-            };
-            events.OnActivityJoinRequest = (IntPtr ptr, ref User user) =>
-            {
-                if (OnActivityJoinRequest != null)
-                {
-                    OnActivityJoinRequest.Invoke(ref user);
-                }
-            };
-            events.OnActivityInvite = (IntPtr ptr, ActivityActionType type, ref User user, ref Activity activity) =>
-            {
-                if (OnActivityInvite != null)
-                {
-                    OnActivityInvite.Invoke(type, ref user, ref activity);
-                }
-            };
+            events.OnActivityJoin = OnActivityJoinImpl;
+            events.OnActivitySpectate = OnActivitySpectateImpl;
+            events.OnActivityJoinRequest = OnActivityJoinRequestImpl;
+            events.OnActivityInvite = OnActivityInviteImpl;
             Marshal.StructureToPtr(events, eventsPtr, false);
         }
 
@@ -1745,54 +1771,125 @@ namespace Discord
             }
         }
 
+        [MonoPInvokeCallback]
+        private static void UpdateActivityCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            UpdateActivityHandler callback = (UpdateActivityHandler)h.Target;
+            h.Free();
+            callback(result);
+        }
+
+        FFIMethods.UpdateActivityCallback g_updateActivityCallback = UpdateActivityCallbackImpl;
+
         public void UpdateActivity(Activity activity, UpdateActivityHandler callback)
         {
-            FFIMethods.UpdateActivityCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.UpdateActivity(MethodsPtr, ref activity, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.UpdateActivity(MethodsPtr, ref activity, GCHandle.ToIntPtr(wrapped), UpdateActivityCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void ClearActivityCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            ClearActivityHandler callback = (ClearActivityHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void ClearActivity(ClearActivityHandler callback)
         {
-            FFIMethods.ClearActivityCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.ClearActivity(MethodsPtr, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.ClearActivity(MethodsPtr, GCHandle.ToIntPtr(wrapped), ClearActivityCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void SendRequestReplyCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            SendRequestReplyHandler callback = (SendRequestReplyHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void SendRequestReply(Int64 userId, ActivityJoinRequestReply reply, SendRequestReplyHandler callback)
         {
-            FFIMethods.SendRequestReplyCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.SendRequestReply(MethodsPtr, userId, reply, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.SendRequestReply(MethodsPtr, userId, reply, GCHandle.ToIntPtr(wrapped), SendRequestReplyCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void SendInviteCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            SendInviteHandler callback = (SendInviteHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void SendInvite(Int64 userId, ActivityActionType type, string content, SendInviteHandler callback)
         {
-            FFIMethods.SendInviteCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.SendInvite(MethodsPtr, userId, type, content, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.SendInvite(MethodsPtr, userId, type, content, GCHandle.ToIntPtr(wrapped), SendInviteCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void AcceptInviteCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            AcceptInviteHandler callback = (AcceptInviteHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void AcceptInvite(Int64 userId, AcceptInviteHandler callback)
         {
-            FFIMethods.AcceptInviteCallback wrapped = (IntPtr ptr, Result result) =>
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.AcceptInvite(MethodsPtr, userId, GCHandle.ToIntPtr(wrapped), AcceptInviteCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnActivityJoinImpl(IntPtr ptr, string secret)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.ActivityManagerInstance.OnActivityJoin != null)
             {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.AcceptInvite(MethodsPtr, userId, Utility.Retain(wrapped), wrapped);
+                d.ActivityManagerInstance.OnActivityJoin.Invoke(secret);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnActivitySpectateImpl(IntPtr ptr, string secret)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.ActivityManagerInstance.OnActivitySpectate != null)
+            {
+                d.ActivityManagerInstance.OnActivitySpectate.Invoke(secret);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnActivityJoinRequestImpl(IntPtr ptr, ref User user)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.ActivityManagerInstance.OnActivityJoinRequest != null)
+            {
+                d.ActivityManagerInstance.OnActivityJoinRequest.Invoke(ref user);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnActivityInviteImpl(IntPtr ptr, ActivityActionType type, ref User user, ref Activity activity)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.ActivityManagerInstance.OnActivityInvite != null)
+            {
+                d.ActivityManagerInstance.OnActivityInvite.Invoke(type, ref user, ref activity);
+            }
         }
     }
 
@@ -1847,17 +1944,17 @@ namespace Discord
 
         private IntPtr MethodsPtr;
 
-        private Nullable<FFIMethods> MethodsStructure;
+        private Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -1880,30 +1977,24 @@ namespace Discord
 
         private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
         {
-            events.OnRefresh = (IntPtr ptr) =>
-            {
-                if (OnRefresh != null)
-                {
-                    OnRefresh.Invoke();
-                }
-            };
-            events.OnRelationshipUpdate = (IntPtr ptr, ref Relationship relationship) =>
-            {
-                if (OnRelationshipUpdate != null)
-                {
-                    OnRelationshipUpdate.Invoke(ref relationship);
-                }
-            };
+            events.OnRefresh = OnRefreshImpl;
+            events.OnRelationshipUpdate = OnRelationshipUpdateImpl;
             Marshal.StructureToPtr(events, eventsPtr, false);
+        }
+
+        [MonoPInvokeCallback]
+        private static bool FilterCallbackImpl(IntPtr ptr, ref Relationship relationship)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            FilterHandler callback = (FilterHandler)h.Target;
+            return callback(ref relationship);
         }
 
         public void Filter(FilterHandler callback)
         {
-            FFIMethods.FilterCallback wrapped = (IntPtr ptr, ref Relationship relationship) =>
-            {
-                return callback(ref relationship);
-            };
-            Methods.Filter(MethodsPtr, IntPtr.Zero, wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.Filter(MethodsPtr, GCHandle.ToIntPtr(wrapped), FilterCallbackImpl);
+            wrapped.Free();
         }
 
         public Int32 Count()
@@ -1937,6 +2028,28 @@ namespace Discord
                 throw new ResultException(res);
             }
             return ret;
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnRefreshImpl(IntPtr ptr)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.RelationshipManagerInstance.OnRefresh != null)
+            {
+                d.RelationshipManagerInstance.OnRefresh.Invoke();
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnRelationshipUpdateImpl(IntPtr ptr, ref Relationship relationship)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.RelationshipManagerInstance.OnRelationshipUpdate != null)
+            {
+                d.RelationshipManagerInstance.OnRelationshipUpdate.Invoke(ref relationship);
+            }
         }
     }
 
@@ -1990,13 +2103,13 @@ namespace Discord
         internal partial struct FFIMethods
         {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            internal delegate Result GetLobbyCreateTransactionMethod(IntPtr methodsPtr, ref LobbyTransaction transaction);
+            internal delegate Result GetLobbyCreateTransactionMethod(IntPtr methodsPtr, ref IntPtr transaction);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            internal delegate Result GetLobbyUpdateTransactionMethod(IntPtr methodsPtr, Int64 lobbyId, ref LobbyTransaction transaction);
+            internal delegate Result GetLobbyUpdateTransactionMethod(IntPtr methodsPtr, Int64 lobbyId, ref IntPtr transaction);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            internal delegate Result GetMemberUpdateTransactionMethod(IntPtr methodsPtr, Int64 lobbyId, Int64 userId, ref LobbyMemberTransaction transaction);
+            internal delegate Result GetMemberUpdateTransactionMethod(IntPtr methodsPtr, Int64 lobbyId, Int64 userId, ref IntPtr transaction);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             internal delegate void CreateLobbyCallback(IntPtr ptr, Result result, ref Lobby lobby);
@@ -2080,7 +2193,7 @@ namespace Discord
             internal delegate void SendLobbyMessageMethod(IntPtr methodsPtr, Int64 lobbyId, byte[] data, Int32 dataLen, IntPtr callbackData, SendLobbyMessageCallback callback);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            internal delegate Result GetSearchQueryMethod(IntPtr methodsPtr, ref LobbySearchQuery query);
+            internal delegate Result GetSearchQueryMethod(IntPtr methodsPtr, ref IntPtr query);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             internal delegate void SearchCallback(IntPtr ptr, Result result);
@@ -2228,17 +2341,17 @@ namespace Discord
 
         private IntPtr MethodsPtr;
 
-        private Nullable<FFIMethods> MethodsStructure;
+        private Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -2273,73 +2386,21 @@ namespace Discord
 
         private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
         {
-            events.OnLobbyUpdate = (IntPtr ptr, Int64 lobbyId) =>
-            {
-                if (OnLobbyUpdate != null)
-                {
-                    OnLobbyUpdate.Invoke(lobbyId);
-                }
-            };
-            events.OnLobbyDelete = (IntPtr ptr, Int64 lobbyId, UInt32 reason) =>
-            {
-                if (OnLobbyDelete != null)
-                {
-                    OnLobbyDelete.Invoke(lobbyId, reason);
-                }
-            };
-            events.OnMemberConnect = (IntPtr ptr, Int64 lobbyId, Int64 userId) =>
-            {
-                if (OnMemberConnect != null)
-                {
-                    OnMemberConnect.Invoke(lobbyId, userId);
-                }
-            };
-            events.OnMemberUpdate = (IntPtr ptr, Int64 lobbyId, Int64 userId) =>
-            {
-                if (OnMemberUpdate != null)
-                {
-                    OnMemberUpdate.Invoke(lobbyId, userId);
-                }
-            };
-            events.OnMemberDisconnect = (IntPtr ptr, Int64 lobbyId, Int64 userId) =>
-            {
-                if (OnMemberDisconnect != null)
-                {
-                    OnMemberDisconnect.Invoke(lobbyId, userId);
-                }
-            };
-            events.OnLobbyMessage = (IntPtr ptr, Int64 lobbyId, Int64 userId, IntPtr dataPtr, Int32 dataLen) =>
-            {
-                if (OnLobbyMessage != null)
-                {
-                    byte[] data = new byte[dataLen];
-                    Marshal.Copy(dataPtr, data, 0, (int)dataLen);
-                    OnLobbyMessage.Invoke(lobbyId, userId, data);
-                }
-            };
-            events.OnSpeaking = (IntPtr ptr, Int64 lobbyId, Int64 userId, bool speaking) =>
-            {
-                if (OnSpeaking != null)
-                {
-                    OnSpeaking.Invoke(lobbyId, userId, speaking);
-                }
-            };
-            events.OnNetworkMessage = (IntPtr ptr, Int64 lobbyId, Int64 userId, byte channelId, IntPtr dataPtr, Int32 dataLen) =>
-            {
-                if (OnNetworkMessage != null)
-                {
-                    byte[] data = new byte[dataLen];
-                    Marshal.Copy(dataPtr, data, 0, (int)dataLen);
-                    OnNetworkMessage.Invoke(lobbyId, userId, channelId, data);
-                }
-            };
+            events.OnLobbyUpdate = OnLobbyUpdateImpl;
+            events.OnLobbyDelete = OnLobbyDeleteImpl;
+            events.OnMemberConnect = OnMemberConnectImpl;
+            events.OnMemberUpdate = OnMemberUpdateImpl;
+            events.OnMemberDisconnect = OnMemberDisconnectImpl;
+            events.OnLobbyMessage = OnLobbyMessageImpl;
+            events.OnSpeaking = OnSpeakingImpl;
+            events.OnNetworkMessage = OnNetworkMessageImpl;
             Marshal.StructureToPtr(events, eventsPtr, false);
         }
 
         public LobbyTransaction GetLobbyCreateTransaction()
         {
             var ret = new LobbyTransaction();
-            var res = Methods.GetLobbyCreateTransaction(MethodsPtr, ref ret);
+            var res = Methods.GetLobbyCreateTransaction(MethodsPtr, ref ret.MethodsPtr);
             if (res != Result.Ok)
             {
                 throw new ResultException(res);
@@ -2350,7 +2411,7 @@ namespace Discord
         public LobbyTransaction GetLobbyUpdateTransaction(Int64 lobbyId)
         {
             var ret = new LobbyTransaction();
-            var res = Methods.GetLobbyUpdateTransaction(MethodsPtr, lobbyId, ref ret);
+            var res = Methods.GetLobbyUpdateTransaction(MethodsPtr, lobbyId, ref ret.MethodsPtr);
             if (res != Result.Ok)
             {
                 throw new ResultException(res);
@@ -2361,7 +2422,7 @@ namespace Discord
         public LobbyMemberTransaction GetMemberUpdateTransaction(Int64 lobbyId, Int64 userId)
         {
             var ret = new LobbyMemberTransaction();
-            var res = Methods.GetMemberUpdateTransaction(MethodsPtr, lobbyId, userId, ref ret);
+            var res = Methods.GetMemberUpdateTransaction(MethodsPtr, lobbyId, userId, ref ret.MethodsPtr);
             if (res != Result.Ok)
             {
                 throw new ResultException(res);
@@ -2369,66 +2430,96 @@ namespace Discord
             return ret;
         }
 
+        [MonoPInvokeCallback]
+        private static void CreateLobbyCallbackImpl(IntPtr ptr, Result result, ref Lobby lobby)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            CreateLobbyHandler callback = (CreateLobbyHandler)h.Target;
+            h.Free();
+            callback(result, ref lobby);
+        }
+
         public void CreateLobby(LobbyTransaction transaction, CreateLobbyHandler callback)
         {
-            FFIMethods.CreateLobbyCallback wrapped = (IntPtr ptr, Result result, ref Lobby lobby) =>
-            {
-                Utility.Release(ptr);
-                callback(result, ref lobby);
-            };
-            Methods.CreateLobby(MethodsPtr, transaction.MethodsPtr, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.CreateLobby(MethodsPtr, transaction.MethodsPtr, GCHandle.ToIntPtr(wrapped), CreateLobbyCallbackImpl);
             transaction.MethodsPtr = IntPtr.Zero;
+        }
+
+        [MonoPInvokeCallback]
+        private static void UpdateLobbyCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            UpdateLobbyHandler callback = (UpdateLobbyHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void UpdateLobby(Int64 lobbyId, LobbyTransaction transaction, UpdateLobbyHandler callback)
         {
-            FFIMethods.UpdateLobbyCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.UpdateLobby(MethodsPtr, lobbyId, transaction.MethodsPtr, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.UpdateLobby(MethodsPtr, lobbyId, transaction.MethodsPtr, GCHandle.ToIntPtr(wrapped), UpdateLobbyCallbackImpl);
             transaction.MethodsPtr = IntPtr.Zero;
+        }
+
+        [MonoPInvokeCallback]
+        private static void DeleteLobbyCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            DeleteLobbyHandler callback = (DeleteLobbyHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void DeleteLobby(Int64 lobbyId, DeleteLobbyHandler callback)
         {
-            FFIMethods.DeleteLobbyCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.DeleteLobby(MethodsPtr, lobbyId, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.DeleteLobby(MethodsPtr, lobbyId, GCHandle.ToIntPtr(wrapped), DeleteLobbyCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void ConnectLobbyCallbackImpl(IntPtr ptr, Result result, ref Lobby lobby)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            ConnectLobbyHandler callback = (ConnectLobbyHandler)h.Target;
+            h.Free();
+            callback(result, ref lobby);
         }
 
         public void ConnectLobby(Int64 lobbyId, string secret, ConnectLobbyHandler callback)
         {
-            FFIMethods.ConnectLobbyCallback wrapped = (IntPtr ptr, Result result, ref Lobby lobby) =>
-            {
-                Utility.Release(ptr);
-                callback(result, ref lobby);
-            };
-            Methods.ConnectLobby(MethodsPtr, lobbyId, secret, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.ConnectLobby(MethodsPtr, lobbyId, secret, GCHandle.ToIntPtr(wrapped), ConnectLobbyCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void ConnectLobbyWithActivitySecretCallbackImpl(IntPtr ptr, Result result, ref Lobby lobby)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            ConnectLobbyWithActivitySecretHandler callback = (ConnectLobbyWithActivitySecretHandler)h.Target;
+            h.Free();
+            callback(result, ref lobby);
         }
 
         public void ConnectLobbyWithActivitySecret(string activitySecret, ConnectLobbyWithActivitySecretHandler callback)
         {
-            FFIMethods.ConnectLobbyWithActivitySecretCallback wrapped = (IntPtr ptr, Result result, ref Lobby lobby) =>
-            {
-                Utility.Release(ptr);
-                callback(result, ref lobby);
-            };
-            Methods.ConnectLobbyWithActivitySecret(MethodsPtr, activitySecret, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.ConnectLobbyWithActivitySecret(MethodsPtr, activitySecret, GCHandle.ToIntPtr(wrapped), ConnectLobbyWithActivitySecretCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void DisconnectLobbyCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            DisconnectLobbyHandler callback = (DisconnectLobbyHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void DisconnectLobby(Int64 lobbyId, DisconnectLobbyHandler callback)
         {
-            FFIMethods.DisconnectLobbyCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.DisconnectLobby(MethodsPtr, lobbyId, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.DisconnectLobby(MethodsPtr, lobbyId, GCHandle.ToIntPtr(wrapped), DisconnectLobbyCallbackImpl);
         }
 
         public Lobby GetLobby(Int64 lobbyId)
@@ -2552,31 +2643,41 @@ namespace Discord
             return ret;
         }
 
+        [MonoPInvokeCallback]
+        private static void UpdateMemberCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            UpdateMemberHandler callback = (UpdateMemberHandler)h.Target;
+            h.Free();
+            callback(result);
+        }
+
         public void UpdateMember(Int64 lobbyId, Int64 userId, LobbyMemberTransaction transaction, UpdateMemberHandler callback)
         {
-            FFIMethods.UpdateMemberCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.UpdateMember(MethodsPtr, lobbyId, userId, transaction.MethodsPtr, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.UpdateMember(MethodsPtr, lobbyId, userId, transaction.MethodsPtr, GCHandle.ToIntPtr(wrapped), UpdateMemberCallbackImpl);
             transaction.MethodsPtr = IntPtr.Zero;
+        }
+
+        [MonoPInvokeCallback]
+        private static void SendLobbyMessageCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            SendLobbyMessageHandler callback = (SendLobbyMessageHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void SendLobbyMessage(Int64 lobbyId, byte[] data, SendLobbyMessageHandler callback)
         {
-            FFIMethods.SendLobbyMessageCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.SendLobbyMessage(MethodsPtr, lobbyId, data, data.Length, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.SendLobbyMessage(MethodsPtr, lobbyId, data, data.Length, GCHandle.ToIntPtr(wrapped), SendLobbyMessageCallbackImpl);
         }
 
         public LobbySearchQuery GetSearchQuery()
         {
             var ret = new LobbySearchQuery();
-            var res = Methods.GetSearchQuery(MethodsPtr, ref ret);
+            var res = Methods.GetSearchQuery(MethodsPtr, ref ret.MethodsPtr);
             if (res != Result.Ok)
             {
                 throw new ResultException(res);
@@ -2584,14 +2685,19 @@ namespace Discord
             return ret;
         }
 
+        [MonoPInvokeCallback]
+        private static void SearchCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            SearchHandler callback = (SearchHandler)h.Target;
+            h.Free();
+            callback(result);
+        }
+
         public void Search(LobbySearchQuery query, SearchHandler callback)
         {
-            FFIMethods.SearchCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.Search(MethodsPtr, query.MethodsPtr, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.Search(MethodsPtr, query.MethodsPtr, GCHandle.ToIntPtr(wrapped), SearchCallbackImpl);
             query.MethodsPtr = IntPtr.Zero;
         }
 
@@ -2613,24 +2719,34 @@ namespace Discord
             return ret;
         }
 
+        [MonoPInvokeCallback]
+        private static void ConnectVoiceCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            ConnectVoiceHandler callback = (ConnectVoiceHandler)h.Target;
+            h.Free();
+            callback(result);
+        }
+
         public void ConnectVoice(Int64 lobbyId, ConnectVoiceHandler callback)
         {
-            FFIMethods.ConnectVoiceCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.ConnectVoice(MethodsPtr, lobbyId, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.ConnectVoice(MethodsPtr, lobbyId, GCHandle.ToIntPtr(wrapped), ConnectVoiceCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void DisconnectVoiceCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            DisconnectVoiceHandler callback = (DisconnectVoiceHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void DisconnectVoice(Int64 lobbyId, DisconnectVoiceHandler callback)
         {
-            FFIMethods.DisconnectVoiceCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.DisconnectVoice(MethodsPtr, lobbyId, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.DisconnectVoice(MethodsPtr, lobbyId, GCHandle.ToIntPtr(wrapped), DisconnectVoiceCallbackImpl);
         }
 
         public void ConnectNetwork(Int64 lobbyId)
@@ -2675,6 +2791,98 @@ namespace Discord
             if (res != Result.Ok)
             {
                 throw new ResultException(res);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnLobbyUpdateImpl(IntPtr ptr, Int64 lobbyId)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.LobbyManagerInstance.OnLobbyUpdate != null)
+            {
+                d.LobbyManagerInstance.OnLobbyUpdate.Invoke(lobbyId);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnLobbyDeleteImpl(IntPtr ptr, Int64 lobbyId, UInt32 reason)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.LobbyManagerInstance.OnLobbyDelete != null)
+            {
+                d.LobbyManagerInstance.OnLobbyDelete.Invoke(lobbyId, reason);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnMemberConnectImpl(IntPtr ptr, Int64 lobbyId, Int64 userId)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.LobbyManagerInstance.OnMemberConnect != null)
+            {
+                d.LobbyManagerInstance.OnMemberConnect.Invoke(lobbyId, userId);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnMemberUpdateImpl(IntPtr ptr, Int64 lobbyId, Int64 userId)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.LobbyManagerInstance.OnMemberUpdate != null)
+            {
+                d.LobbyManagerInstance.OnMemberUpdate.Invoke(lobbyId, userId);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnMemberDisconnectImpl(IntPtr ptr, Int64 lobbyId, Int64 userId)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.LobbyManagerInstance.OnMemberDisconnect != null)
+            {
+                d.LobbyManagerInstance.OnMemberDisconnect.Invoke(lobbyId, userId);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnLobbyMessageImpl(IntPtr ptr, Int64 lobbyId, Int64 userId, IntPtr dataPtr, Int32 dataLen)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.LobbyManagerInstance.OnLobbyMessage != null)
+            {
+                byte[] data = new byte[dataLen];
+                Marshal.Copy(dataPtr, data, 0, (int)dataLen);
+                d.LobbyManagerInstance.OnLobbyMessage.Invoke(lobbyId, userId, data);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnSpeakingImpl(IntPtr ptr, Int64 lobbyId, Int64 userId, bool speaking)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.LobbyManagerInstance.OnSpeaking != null)
+            {
+                d.LobbyManagerInstance.OnSpeaking.Invoke(lobbyId, userId, speaking);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnNetworkMessageImpl(IntPtr ptr, Int64 lobbyId, Int64 userId, byte channelId, IntPtr dataPtr, Int32 dataLen)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.LobbyManagerInstance.OnNetworkMessage != null)
+            {
+                byte[] data = new byte[dataLen];
+                Marshal.Copy(dataPtr, data, 0, (int)dataLen);
+                d.LobbyManagerInstance.OnNetworkMessage.Invoke(lobbyId, userId, channelId, data);
             }
         }
     }
@@ -2745,17 +2953,17 @@ namespace Discord
 
         private IntPtr MethodsPtr;
 
-        private Nullable<FFIMethods> MethodsStructure;
+        private Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -2778,25 +2986,14 @@ namespace Discord
 
         private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
         {
-            events.OnMessage = (IntPtr ptr, UInt64 peerId, byte channelId, IntPtr dataPtr, Int32 dataLen) =>
-            {
-                if (OnMessage != null)
-                {
-                    byte[] data = new byte[dataLen];
-                    Marshal.Copy(dataPtr, data, 0, (int)dataLen);
-                    OnMessage.Invoke(peerId, channelId, data);
-                }
-            };
-            events.OnRouteUpdate = (IntPtr ptr, string routeData) =>
-            {
-                if (OnRouteUpdate != null)
-                {
-                    OnRouteUpdate.Invoke(routeData);
-                }
-            };
+            events.OnMessage = OnMessageImpl;
+            events.OnRouteUpdate = OnRouteUpdateImpl;
             Marshal.StructureToPtr(events, eventsPtr, false);
         }
 
+        /// <summary>
+        /// Get the local peer ID for this process.
+        /// </summary>
         public UInt64 GetPeerId()
         {
             var ret = new UInt64();
@@ -2804,6 +3001,9 @@ namespace Discord
             return ret;
         }
 
+        /// <summary>
+        /// Send pending network messages.
+        /// </summary>
         public void Flush()
         {
             var res = Methods.Flush(MethodsPtr);
@@ -2813,6 +3013,9 @@ namespace Discord
             }
         }
 
+        /// <summary>
+        /// Open a connection to a remote peer.
+        /// </summary>
         public void OpenPeer(UInt64 peerId, string routeData)
         {
             var res = Methods.OpenPeer(MethodsPtr, peerId, routeData);
@@ -2822,6 +3025,9 @@ namespace Discord
             }
         }
 
+        /// <summary>
+        /// Update the route data for a connected peer.
+        /// </summary>
         public void UpdatePeer(UInt64 peerId, string routeData)
         {
             var res = Methods.UpdatePeer(MethodsPtr, peerId, routeData);
@@ -2831,6 +3037,9 @@ namespace Discord
             }
         }
 
+        /// <summary>
+        /// Close the connection to a remote peer.
+        /// </summary>
         public void ClosePeer(UInt64 peerId)
         {
             var res = Methods.ClosePeer(MethodsPtr, peerId);
@@ -2840,6 +3049,9 @@ namespace Discord
             }
         }
 
+        /// <summary>
+        /// Open a message channel to a connected peer.
+        /// </summary>
         public void OpenChannel(UInt64 peerId, byte channelId, bool reliable)
         {
             var res = Methods.OpenChannel(MethodsPtr, peerId, channelId, reliable);
@@ -2849,6 +3061,9 @@ namespace Discord
             }
         }
 
+        /// <summary>
+        /// Close a message channel to a connected peer.
+        /// </summary>
         public void CloseChannel(UInt64 peerId, byte channelId)
         {
             var res = Methods.CloseChannel(MethodsPtr, peerId, channelId);
@@ -2858,12 +3073,39 @@ namespace Discord
             }
         }
 
+        /// <summary>
+        /// Send a message to a connected peer over an opened message channel.
+        /// </summary>
         public void SendMessage(UInt64 peerId, byte channelId, byte[] data)
         {
             var res = Methods.SendMessage(MethodsPtr, peerId, channelId, data, data.Length);
             if (res != Result.Ok)
             {
                 throw new ResultException(res);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnMessageImpl(IntPtr ptr, UInt64 peerId, byte channelId, IntPtr dataPtr, Int32 dataLen)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.NetworkManagerInstance.OnMessage != null)
+            {
+                byte[] data = new byte[dataLen];
+                Marshal.Copy(dataPtr, data, 0, (int)dataLen);
+                d.NetworkManagerInstance.OnMessage.Invoke(peerId, channelId, data);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnRouteUpdateImpl(IntPtr ptr, string routeData)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.NetworkManagerInstance.OnRouteUpdate != null)
+            {
+                d.NetworkManagerInstance.OnRouteUpdate.Invoke(routeData);
             }
         }
     }
@@ -2937,17 +3179,17 @@ namespace Discord
 
         private IntPtr MethodsPtr;
 
-        private Nullable<FFIMethods> MethodsStructure;
+        private Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -2968,13 +3210,7 @@ namespace Discord
 
         private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
         {
-            events.OnToggle = (IntPtr ptr, bool locked) =>
-            {
-                if (OnToggle != null)
-                {
-                    OnToggle.Invoke(locked);
-                }
-            };
+            events.OnToggle = OnToggleImpl;
             Marshal.StructureToPtr(events, eventsPtr, false);
         }
 
@@ -2992,44 +3228,75 @@ namespace Discord
             return ret;
         }
 
+        [MonoPInvokeCallback]
+        private static void SetLockedCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            SetLockedHandler callback = (SetLockedHandler)h.Target;
+            h.Free();
+            callback(result);
+        }
+
         public void SetLocked(bool locked, SetLockedHandler callback)
         {
-            FFIMethods.SetLockedCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.SetLocked(MethodsPtr, locked, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.SetLocked(MethodsPtr, locked, GCHandle.ToIntPtr(wrapped), SetLockedCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void OpenActivityInviteCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            OpenActivityInviteHandler callback = (OpenActivityInviteHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void OpenActivityInvite(ActivityActionType type, OpenActivityInviteHandler callback)
         {
-            FFIMethods.OpenActivityInviteCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.OpenActivityInvite(MethodsPtr, type, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.OpenActivityInvite(MethodsPtr, type, GCHandle.ToIntPtr(wrapped), OpenActivityInviteCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void OpenGuildInviteCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            OpenGuildInviteHandler callback = (OpenGuildInviteHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void OpenGuildInvite(string code, OpenGuildInviteHandler callback)
         {
-            FFIMethods.OpenGuildInviteCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.OpenGuildInvite(MethodsPtr, code, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.OpenGuildInvite(MethodsPtr, code, GCHandle.ToIntPtr(wrapped), OpenGuildInviteCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void OpenVoiceSettingsCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            OpenVoiceSettingsHandler callback = (OpenVoiceSettingsHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void OpenVoiceSettings(OpenVoiceSettingsHandler callback)
         {
-            FFIMethods.OpenVoiceSettingsCallback wrapped = (IntPtr ptr, Result result) =>
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.OpenVoiceSettings(MethodsPtr, GCHandle.ToIntPtr(wrapped), OpenVoiceSettingsCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnToggleImpl(IntPtr ptr, bool locked)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.OverlayManagerInstance.OnToggle != null)
             {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.OpenVoiceSettings(MethodsPtr, Utility.Retain(wrapped), wrapped);
+                d.OverlayManagerInstance.OnToggle.Invoke(locked);
+            }
         }
     }
 
@@ -3117,17 +3384,17 @@ namespace Discord
 
         private IntPtr MethodsPtr;
 
-        private Nullable<FFIMethods> MethodsStructure;
+        private Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -3160,28 +3427,38 @@ namespace Discord
             return ret;
         }
 
+        [MonoPInvokeCallback]
+        private static void ReadAsyncCallbackImpl(IntPtr ptr, Result result, IntPtr dataPtr, Int32 dataLen)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            ReadAsyncHandler callback = (ReadAsyncHandler)h.Target;
+            h.Free();
+            byte[] data = new byte[dataLen];
+            Marshal.Copy(dataPtr, data, 0, (int)dataLen);
+            callback(result, data);
+        }
+
         public void ReadAsync(string name, ReadAsyncHandler callback)
         {
-            FFIMethods.ReadAsyncCallback wrapped = (IntPtr ptr, Result result, IntPtr dataPtr, Int32 dataLen) =>
-            {
-                Utility.Release(ptr);
-                byte[] data = new byte[dataLen];
-                Marshal.Copy(dataPtr, data, 0, (int)dataLen);
-                callback(result, data);
-            };
-            Methods.ReadAsync(MethodsPtr, name, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.ReadAsync(MethodsPtr, name, GCHandle.ToIntPtr(wrapped), ReadAsyncCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void ReadAsyncPartialCallbackImpl(IntPtr ptr, Result result, IntPtr dataPtr, Int32 dataLen)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            ReadAsyncPartialHandler callback = (ReadAsyncPartialHandler)h.Target;
+            h.Free();
+            byte[] data = new byte[dataLen];
+            Marshal.Copy(dataPtr, data, 0, (int)dataLen);
+            callback(result, data);
         }
 
         public void ReadAsyncPartial(string name, UInt64 offset, UInt64 length, ReadAsyncPartialHandler callback)
         {
-            FFIMethods.ReadAsyncPartialCallback wrapped = (IntPtr ptr, Result result, IntPtr dataPtr, Int32 dataLen) =>
-            {
-                Utility.Release(ptr);
-                byte[] data = new byte[dataLen];
-                Marshal.Copy(dataPtr, data, 0, (int)dataLen);
-                callback(result, data);
-            };
-            Methods.ReadAsyncPartial(MethodsPtr, name, offset, length, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.ReadAsyncPartial(MethodsPtr, name, offset, length, GCHandle.ToIntPtr(wrapped), ReadAsyncPartialCallbackImpl);
         }
 
         public void Write(string name, byte[] data)
@@ -3193,14 +3470,19 @@ namespace Discord
             }
         }
 
+        [MonoPInvokeCallback]
+        private static void WriteAsyncCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            WriteAsyncHandler callback = (WriteAsyncHandler)h.Target;
+            h.Free();
+            callback(result);
+        }
+
         public void WriteAsync(string name, byte[] data, WriteAsyncHandler callback)
         {
-            FFIMethods.WriteAsyncCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.WriteAsync(MethodsPtr, name, data, data.Length, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.WriteAsync(MethodsPtr, name, data, data.Length, GCHandle.ToIntPtr(wrapped), WriteAsyncCallbackImpl);
         }
 
         public void Delete(string name)
@@ -3355,17 +3637,17 @@ namespace Discord
 
         private IntPtr MethodsPtr;
 
-        private Nullable<FFIMethods> MethodsStructure;
+        private Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -3388,31 +3670,24 @@ namespace Discord
 
         private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
         {
-            events.OnEntitlementCreate = (IntPtr ptr, ref Entitlement entitlement) =>
-            {
-                if (OnEntitlementCreate != null)
-                {
-                    OnEntitlementCreate.Invoke(ref entitlement);
-                }
-            };
-            events.OnEntitlementDelete = (IntPtr ptr, ref Entitlement entitlement) =>
-            {
-                if (OnEntitlementDelete != null)
-                {
-                    OnEntitlementDelete.Invoke(ref entitlement);
-                }
-            };
+            events.OnEntitlementCreate = OnEntitlementCreateImpl;
+            events.OnEntitlementDelete = OnEntitlementDeleteImpl;
             Marshal.StructureToPtr(events, eventsPtr, false);
+        }
+
+        [MonoPInvokeCallback]
+        private static void FetchSkusCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            FetchSkusHandler callback = (FetchSkusHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void FetchSkus(FetchSkusHandler callback)
         {
-            FFIMethods.FetchSkusCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.FetchSkus(MethodsPtr, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.FetchSkus(MethodsPtr, GCHandle.ToIntPtr(wrapped), FetchSkusCallbackImpl);
         }
 
         public Int32 CountSkus()
@@ -3444,14 +3719,19 @@ namespace Discord
             return ret;
         }
 
+        [MonoPInvokeCallback]
+        private static void FetchEntitlementsCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            FetchEntitlementsHandler callback = (FetchEntitlementsHandler)h.Target;
+            h.Free();
+            callback(result);
+        }
+
         public void FetchEntitlements(FetchEntitlementsHandler callback)
         {
-            FFIMethods.FetchEntitlementsCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.FetchEntitlements(MethodsPtr, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.FetchEntitlements(MethodsPtr, GCHandle.ToIntPtr(wrapped), FetchEntitlementsCallbackImpl);
         }
 
         public Int32 CountEntitlements()
@@ -3494,14 +3774,41 @@ namespace Discord
             return ret;
         }
 
+        [MonoPInvokeCallback]
+        private static void StartPurchaseCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            StartPurchaseHandler callback = (StartPurchaseHandler)h.Target;
+            h.Free();
+            callback(result);
+        }
+
         public void StartPurchase(Int64 skuId, StartPurchaseHandler callback)
         {
-            FFIMethods.StartPurchaseCallback wrapped = (IntPtr ptr, Result result) =>
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.StartPurchase(MethodsPtr, skuId, GCHandle.ToIntPtr(wrapped), StartPurchaseCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnEntitlementCreateImpl(IntPtr ptr, ref Entitlement entitlement)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.StoreManagerInstance.OnEntitlementCreate != null)
             {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.StartPurchase(MethodsPtr, skuId, Utility.Retain(wrapped), wrapped);
+                d.StoreManagerInstance.OnEntitlementCreate.Invoke(ref entitlement);
+            }
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnEntitlementDeleteImpl(IntPtr ptr, ref Entitlement entitlement)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.StoreManagerInstance.OnEntitlementDelete != null)
+            {
+                d.StoreManagerInstance.OnEntitlementDelete.Invoke(ref entitlement);
+            }
         }
     }
 
@@ -3579,17 +3886,17 @@ namespace Discord
 
         private IntPtr MethodsPtr;
 
-        private Nullable<FFIMethods> MethodsStructure;
+        private Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -3610,13 +3917,7 @@ namespace Discord
 
         private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
         {
-            events.OnSettingsUpdate = (IntPtr ptr) =>
-            {
-                if (OnSettingsUpdate != null)
-                {
-                    OnSettingsUpdate.Invoke();
-                }
-            };
+            events.OnSettingsUpdate = OnSettingsUpdateImpl;
             Marshal.StructureToPtr(events, eventsPtr, false);
         }
 
@@ -3631,14 +3932,19 @@ namespace Discord
             return ret;
         }
 
+        [MonoPInvokeCallback]
+        private static void SetInputModeCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            SetInputModeHandler callback = (SetInputModeHandler)h.Target;
+            h.Free();
+            callback(result);
+        }
+
         public void SetInputMode(InputMode inputMode, SetInputModeHandler callback)
         {
-            FFIMethods.SetInputModeCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.SetInputMode(MethodsPtr, inputMode, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.SetInputMode(MethodsPtr, inputMode, GCHandle.ToIntPtr(wrapped), SetInputModeCallbackImpl);
         }
 
         public bool IsSelfMute()
@@ -3720,6 +4026,17 @@ namespace Discord
                 throw new ResultException(res);
             }
         }
+
+        [MonoPInvokeCallback]
+        private static void OnSettingsUpdateImpl(IntPtr ptr)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.VoiceManagerInstance.OnSettingsUpdate != null)
+            {
+                d.VoiceManagerInstance.OnSettingsUpdate.Invoke();
+            }
+        }
     }
 
     public partial class AchievementManager
@@ -3740,7 +4057,7 @@ namespace Discord
             internal delegate void SetUserAchievementCallback(IntPtr ptr, Result result);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            internal delegate void SetUserAchievementMethod(IntPtr methodsPtr, Int64 achievementId, Int64 percentComplete, IntPtr callbackData, SetUserAchievementCallback callback);
+            internal delegate void SetUserAchievementMethod(IntPtr methodsPtr, Int64 achievementId, byte percentComplete, IntPtr callbackData, SetUserAchievementCallback callback);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             internal delegate void FetchUserAchievementsCallback(IntPtr ptr, Result result);
@@ -3776,17 +4093,17 @@ namespace Discord
 
         private IntPtr MethodsPtr;
 
-        private Nullable<FFIMethods> MethodsStructure;
+        private Object MethodsStructure;
 
         private FFIMethods Methods
         {
             get
             {
-                if (!MethodsStructure.HasValue)
+                if (MethodsStructure == null)
                 {
-                    MethodsStructure = (Nullable<FFIMethods>)Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
                 }
-                return MethodsStructure.Value;
+                return (FFIMethods)MethodsStructure;
             }
 
         }
@@ -3807,34 +4124,38 @@ namespace Discord
 
         private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
         {
-            events.OnUserAchievementUpdate = (IntPtr ptr, ref UserAchievement userAchievement) =>
-            {
-                if (OnUserAchievementUpdate != null)
-                {
-                    OnUserAchievementUpdate.Invoke(ref userAchievement);
-                }
-            };
+            events.OnUserAchievementUpdate = OnUserAchievementUpdateImpl;
             Marshal.StructureToPtr(events, eventsPtr, false);
         }
 
-        public void SetUserAchievement(Int64 achievementId, Int64 percentComplete, SetUserAchievementHandler callback)
+        [MonoPInvokeCallback]
+        private static void SetUserAchievementCallbackImpl(IntPtr ptr, Result result)
         {
-            FFIMethods.SetUserAchievementCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.SetUserAchievement(MethodsPtr, achievementId, percentComplete, Utility.Retain(wrapped), wrapped);
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            SetUserAchievementHandler callback = (SetUserAchievementHandler)h.Target;
+            h.Free();
+            callback(result);
+        }
+
+        public void SetUserAchievement(Int64 achievementId, byte percentComplete, SetUserAchievementHandler callback)
+        {
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.SetUserAchievement(MethodsPtr, achievementId, percentComplete, GCHandle.ToIntPtr(wrapped), SetUserAchievementCallbackImpl);
+        }
+
+        [MonoPInvokeCallback]
+        private static void FetchUserAchievementsCallbackImpl(IntPtr ptr, Result result)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            FetchUserAchievementsHandler callback = (FetchUserAchievementsHandler)h.Target;
+            h.Free();
+            callback(result);
         }
 
         public void FetchUserAchievements(FetchUserAchievementsHandler callback)
         {
-            FFIMethods.FetchUserAchievementsCallback wrapped = (IntPtr ptr, Result result) =>
-            {
-                Utility.Release(ptr);
-                callback(result);
-            };
-            Methods.FetchUserAchievements(MethodsPtr, Utility.Retain(wrapped), wrapped);
+            GCHandle wrapped = GCHandle.Alloc(callback);
+            Methods.FetchUserAchievements(MethodsPtr, GCHandle.ToIntPtr(wrapped), FetchUserAchievementsCallbackImpl);
         }
 
         public Int32 CountUserAchievements()
@@ -3864,6 +4185,17 @@ namespace Discord
                 throw new ResultException(res);
             }
             return ret;
+        }
+
+        [MonoPInvokeCallback]
+        private static void OnUserAchievementUpdateImpl(IntPtr ptr, ref UserAchievement userAchievement)
+        {
+            GCHandle h = GCHandle.FromIntPtr(ptr);
+            Discord d = (Discord)h.Target;
+            if (d.AchievementManagerInstance.OnUserAchievementUpdate != null)
+            {
+                d.AchievementManagerInstance.OnUserAchievementUpdate.Invoke(ref userAchievement);
+            }
         }
     }
 }
